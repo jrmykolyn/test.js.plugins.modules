@@ -1,22 +1,26 @@
 ((window) => {
   class Core {
     constructor(opts = {}) {
-      console.log('__ INSIDE `Core#constructor()`');
       this.modules = opts.modules || {};
 
-      // Register listeners.
-      window.addEventListener('NAMESPACE:FETCH', () => {
-        console.log('__ INSIDE `NAMESPACE:FETCH` CALLBACK');
+      Object.keys(this.modules).forEach((k) => {
+        const module = this.modules[k];
 
-        this.modules.moduleA.fetch()
-          .then((data) => {
-            console.log('__ RECEIVED RESPONSE');
-            console.log('__', data);
-          })
-          .catch((e) => {
-            console.error('__ ENCOUNTERED ERROR');
-            console.error(e);
+        module.register().forEach(({ listenOn, emitOn, callbacks }) => {
+          window.addEventListener(listenOn, () => {
+            callbacks.forEach((callback) => {
+              callback()
+                .then((data) => {
+                  emitOn.forEach((eventName) => {
+                    window.dispatchEvent(new CustomEvent(eventName, { detail: data }));
+                  });
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
+            });
           });
+        });
       });
     }
   }
