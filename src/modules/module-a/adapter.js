@@ -3,6 +3,9 @@
     constructor(api) {
       console.log('__ INSIDE `Adapter#constructor()`');
       this.api = api;
+
+      // Bind.
+      this.fetch = this.fetch.bind(this);
     }
 
     fetch() {
