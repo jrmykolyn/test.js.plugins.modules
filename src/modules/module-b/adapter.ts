@@ -1,5 +1,7 @@
 declare var window: Window;
 
+import { RegistrationObject } from '../';
+
 ((window: any, ADAPTERS) => {
   class AdapterB {
     api: any;
@@ -24,7 +26,7 @@ declare var window: Window;
       });
     }
 
-    register() {
+    register(): RegistrationObject[] {
       return [
         { listenOn: 'NAMESPACE:UPDATE', emitOn: ['NAMESPACE:UPDATED'], callbacks: [this.update] },
       ];
