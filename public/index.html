@@ -7,7 +7,9 @@
   <body>
     <div>
       <button id="fetch">Fetch Data</button>
+      <button id="fetchDirect">Invoke Data Fetching Method</button>
       <button id="update">Update Data</button>
+      <button id="updateDirect">Invoke Data Updating Method</button>
     </div>
     <div>
       <pre id="target"></pre>
@@ -22,7 +24,9 @@
     <script charset="utf-8">
       window.addEventListener('DOMContentLoaded', () => {
         const fetchElem = document.getElementById('fetch');
+        const fetchDirectElem = document.getElementById('fetchDirect');
         const updateElem = document.getElementById('update');
+        const updateDirectElem = document.getElementById('updateDirect');
         const targetElem = document.getElementById('target');
 
         // Register listeners.
@@ -30,8 +34,28 @@
           window.dispatchEvent(new Event('NAMESPACE:FETCH'));
         });
 
+        fetchDirectElem.addEventListener('click', () => {
+          window.__CORE__.modules.moduleA.fetch()
+            .then((data) => {
+              window.dispatchEvent(new CustomEvent('NAMESPACE:FETCHED', { detail: data }));
+            })
+            .catch((e) => {
+              console.error(e);
+            });
+        });
+
         updateElem.addEventListener('click', () => {
           window.dispatchEvent(new Event('NAMESPACE:UPDATE'));
+        });
+
+        updateDirectElem.addEventListener('click', () => {
+          window.__CORE__.modules.moduleB.update()
+            .then((data) => {
+              window.dispatchEvent(new CustomEvent('NAMESPACE:UPDATED', { detail: data }));
+            })
+            .catch((e) => {
+              console.error(e);
+            });
         });
 
         window.addEventListener('NAMESPACE:FETCHED', ({ detail: data }) => {
