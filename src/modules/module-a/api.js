@@ -1,12 +1,14 @@
-class Api {
-  constructor() {
-    console.log('__ INSIDE `Api#constructor()`');
+((window, APIS) => {
+  class Api {
+    constructor() {
+      console.log('__ INSIDE `Api#constructor()`');
+    }
+
+    fetchData() {
+      console.log('__ INSIDE `Api#fetchData()`');
+      return { foo: 'bar' };
+    }
   }
 
-  fetchData() {
-    console.log('__ INSIDE `Api#fetchData()`');
-    return { foo: 'bar' };
-  }
-}
-
-module.exports = Api;
+  APIS.Api = Api;
+})(window, (window.__APIS__ = window.__APIS__ || {}));
