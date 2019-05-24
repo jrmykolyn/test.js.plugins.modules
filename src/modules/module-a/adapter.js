@@ -1,7 +1,7 @@
 ((window, ADAPTERS) => {
-  class Adapter {
+  class AdapterA {
     constructor(api) {
-      console.log('__ INSIDE `Adapter#constructor()`');
+      console.log('__ INSIDE `AdapterA#constructor()`');
       this.api = api;
 
       // Bind.
@@ -9,7 +9,7 @@
     }
 
     fetch() {
-      console.log('__ INSIDE `Adapter#fetch()`');
+      console.log('__ INSIDE `AdapterA#fetch()`');
 
       return new Promise((resolve, reject) => {
         try {
@@ -27,5 +27,5 @@
     }
   }
 
-  ADAPTERS.Adapter = Adapter;
+  ADAPTERS.AdapterA = AdapterA;
 })(window, (window.__ADAPTERS__ = window.__ADAPTERS__ || {}));

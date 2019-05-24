@@ -1,6 +1,6 @@
 ((window, MODULES) => {
-  const Api = window.__APIS__.Api;
-  const Adapter = window.__ADAPTERS__.Adapter;
+  const ApiA = window.__APIS__.ApiA;
+  const AdapterA = window.__ADAPTERS__.AdapterA;
 
-  MODULES.moduleA = new Adapter(new Api());
+  MODULES.moduleA = new AdapterA(new ApiA());
 })(window, (window.__MODULES__ = window.__MODULES__ || {}));
