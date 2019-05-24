@@ -16,6 +16,12 @@
         }
       });
     }
+
+    register() {
+      return [
+        { listenOn: 'NAMESPACE:FETCH', emitOn: ['NAMESPACE:FETCHED'], callbacks: [this.fetch] },
+      ];
+    }
   }
 
   ADAPTERS.Adapter = Adapter;
