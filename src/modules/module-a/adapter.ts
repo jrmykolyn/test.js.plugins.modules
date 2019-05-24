@@ -1,7 +1,9 @@
-declare var window;
+declare var window: Window;
 
 ((window: any, ADAPTERS) => {
   class AdapterA {
+    api: any;
+
     constructor(api) {
       console.log('__ INSIDE `AdapterA#constructor()`');
       this.api = api;

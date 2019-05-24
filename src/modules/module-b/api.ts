@@ -1,4 +1,4 @@
-declare var window;
+declare var window: Window;
 
 ((window: any, APIS) => {
   class ApiB {

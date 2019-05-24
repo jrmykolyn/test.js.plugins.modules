@@ -1,8 +1,18 @@
-declare var window;
+interface Window {
+  [key:string]: any;
+}
+
+declare var window: Window;
+
+interface CoreOpts {
+  modules?: any;
+}
 
 ((window: any) => {
   class Core {
-    constructor(opts = {}) {
+    modules: any;
+
+    constructor(opts: CoreOpts = {}) {
       this.modules = opts.modules || {};
 
       // For each module provided via `opts`:
