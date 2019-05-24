@@ -5,9 +5,26 @@
     <title>Test - JS - Plugins - Modules</title>
   </head>
   <body>
+    <button id="btn">Fetch Data</button>
     <script src="modules/module-a/api.js"></script>
     <script src="modules/module-a/adapter.js"></script>
     <script src="modules/module-a/index.js"></script>
     <script src="core/index.js"></script>
+    <script charset="utf-8">
+      window.addEventListener('DOMContentLoaded', () => {
+        const btnElem = document.getElementById('btn');
+
+
+        // Register listeners.
+        btn.addEventListener('click', () => {
+          window.dispatchEvent(new Event('NAMESPACE:FETCH'));
+        });
+
+        window.addEventListener('NAMESPACE:FETCHED', (data) => {
+          console.log('__ INSIDE `NAMESPACE:FETCHED` CALLBACK');
+          console.log('__', data);
+        });
+      });
+    </script>
   </body>
 </html>
