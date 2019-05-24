@@ -5,23 +5,36 @@
     <title>Test - JS - Plugins - Modules</title>
   </head>
   <body>
-    <button id="btn">Fetch Data</button>
+    <button id="fetch">Fetch Data</button>
+    <button id="update">Update Data</button>
     <script src="modules/module-a/api.js"></script>
     <script src="modules/module-a/adapter.js"></script>
     <script src="modules/module-a/index.js"></script>
+    <script src="modules/module-b/api.js"></script>
+    <script src="modules/module-b/adapter.js"></script>
+    <script src="modules/module-b/index.js"></script>
     <script src="core/index.js"></script>
     <script charset="utf-8">
       window.addEventListener('DOMContentLoaded', () => {
-        const btnElem = document.getElementById('btn');
-
+        const fetchElem = document.getElementById('fetch');
+        const updateElem = document.getElementById('update');
 
         // Register listeners.
-        btn.addEventListener('click', () => {
+        fetchElem.addEventListener('click', () => {
           window.dispatchEvent(new Event('NAMESPACE:FETCH'));
+        });
+
+        updateElem.addEventListener('click', () => {
+          window.dispatchEvent(new Event('NAMESPACE:UPDATE'));
         });
 
         window.addEventListener('NAMESPACE:FETCHED', (data) => {
           console.log('__ INSIDE `NAMESPACE:FETCHED` CALLBACK');
+          console.log('__', data);
+        });
+
+        window.addEventListener('NAMESPACE:UPDATED', (data) => {
+          console.log('__ INSIDE `NAMESPACE:UPDATED` CALLBACK');
           console.log('__', data);
         });
       });
