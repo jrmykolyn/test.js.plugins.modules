@@ -1,12 +1,18 @@
 ((window, APIS) => {
   class ApiA {
+    static get API_URL() {
+      return 'https://dog.ceo/api/breeds/list/all';
+    }
+
     constructor() {
       console.log('__ INSIDE `ApiA#constructor()`');
     }
 
     fetchData() {
       console.log('__ INSIDE `ApiA#fetchData()`');
-      return { foo: 'bar' };
+
+      return fetch(ApiA.API_URL)
+        .then((data) => data.json());
     }
   }
 
