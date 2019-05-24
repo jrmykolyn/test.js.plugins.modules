@@ -1,4 +1,6 @@
-((window, APIS) => {
+declare var window;
+
+((window: any, APIS) => {
   class ApiB {
     static get API_URL() {
       return 'https://api.exchangeratesapi.io/latest';

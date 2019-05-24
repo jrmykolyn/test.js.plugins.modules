@@ -1,4 +1,6 @@
-((window) => {
+declare var window;
+
+((window: any) => {
   class Core {
     constructor(opts = {}) {
       this.modules = opts.modules || {};

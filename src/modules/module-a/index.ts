@@ -1,4 +1,6 @@
-((window, MODULES) => {
+declare var window;
+
+((window: any, MODULES) => {
   const ApiA = window.__APIS__.ApiA;
   const AdapterA = window.__ADAPTERS__.AdapterA;
 
