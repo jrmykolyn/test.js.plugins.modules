@@ -22,7 +22,7 @@
 
     register() {
       return [
-        { listenOn: 'NAMESPACE:UPDATE', emitOn: ['NAMESPACE:UPDATEED'], callbacks: [this.update] },
+        { listenOn: 'NAMESPACE:UPDATE', emitOn: ['NAMESPACE:UPDATED'], callbacks: [this.update] },
       ];
     }
   }
