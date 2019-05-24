@@ -5,8 +5,13 @@
     <title>Test - JS - Plugins - Modules</title>
   </head>
   <body>
-    <button id="fetch">Fetch Data</button>
-    <button id="update">Update Data</button>
+    <div>
+      <button id="fetch">Fetch Data</button>
+      <button id="update">Update Data</button>
+    </div>
+    <div>
+      <pre id="target"></pre>
+    </div>
     <script src="modules/module-a/api.js"></script>
     <script src="modules/module-a/adapter.js"></script>
     <script src="modules/module-a/index.js"></script>
@@ -18,6 +23,7 @@
       window.addEventListener('DOMContentLoaded', () => {
         const fetchElem = document.getElementById('fetch');
         const updateElem = document.getElementById('update');
+        const targetElem = document.getElementById('target');
 
         // Register listeners.
         fetchElem.addEventListener('click', () => {
@@ -28,14 +34,14 @@
           window.dispatchEvent(new Event('NAMESPACE:UPDATE'));
         });
 
-        window.addEventListener('NAMESPACE:FETCHED', (data) => {
-          console.log('__ INSIDE `NAMESPACE:FETCHED` CALLBACK');
-          console.log('__', data);
+        window.addEventListener('NAMESPACE:FETCHED', ({ detail: data }) => {
+          targetElem.innerHTML = '';
+          targetElem.innerHTML = JSON.stringify(data, null, 2);
         });
 
-        window.addEventListener('NAMESPACE:UPDATED', (data) => {
-          console.log('__ INSIDE `NAMESPACE:UPDATED` CALLBACK');
-          console.log('__', data);
+        window.addEventListener('NAMESPACE:UPDATED', ({ detail: data }) => {
+          targetElem.innerHTML = '';
+          targetElem.innerHTML = JSON.stringify(data, null, 2);
         });
       });
     </script>
