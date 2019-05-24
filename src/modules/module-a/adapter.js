@@ -7,7 +7,14 @@
 
     fetch() {
       console.log('__ INSIDE `Adapter#fetch()`');
-      return this.api.fetchData();
+
+      return new Promise((resolve, reject) => {
+        try {
+          resolve(this.api.fetchData());
+        } catch (e) {
+          reject(e);
+        }
+      });
     }
   }
 
