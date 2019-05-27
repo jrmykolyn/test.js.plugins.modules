@@ -5,9 +5,18 @@
     <title>Test - JS - Plugins - Modules</title>
   </head>
   <body>
+    <!-- Controls. -->
     <div>
       <!-- Web Component controls. -->
       <div>
+        <!--
+          Here we insert 2x Web Components, each of which receives a user-supplied
+          event name (via the 'outbound-event' attribute). An event of the same name
+          is invoked each time a user clicks on one of the components.
+
+          Additionally, each component receives custom text content via the 'content'
+          slot.
+        -->
         <component-a outbound-event="NAMESPACE:FETCH">
           <span slot="content">Fetch Data</span>
         </component-a>
@@ -17,13 +26,27 @@
       </div>
       <!-- 'Vanilla' HTML controls. -->
       <div>
+        <!--
+          Here we insert 2x 'vanilla' <button> elements, each of includes an 'id'
+          attribute and inner text content.
+
+          Event listeners will be registered against each of these elements
+          within the inline script below.
+        -->
         <button id="fetchDirect">Invoke Data Fetching Method</button>
         <button id="updateDirect">Invoke Data Updating Method</button>
       </div>
     </div>
+
+    <!-- Output. -->
     <div>
+      <!--
+        Here we define the element that will display any data received
+        from 'inbound events'.
+      -->
       <pre id="target"></pre>
     </div>
+
     <!-- Import components. -->
     <script src="../dist/components/component-a/index.js"></script>
     <!-- Import modules. -->
@@ -34,13 +57,33 @@
     <script src="../dist/modules/module-b/adapter.js"></script>
     <script src="../dist/modules/module-b/index.js"></script>
     <script src="../dist/core/index.js"></script>
+    <!-- Page logic. -->
     <script charset="utf-8">
       window.addEventListener('DOMContentLoaded', () => {
+        /**
+         * Here we capture references to significant elements that are present
+         * within the document.
+         *
+         * Event listeners will be registered against the 'fetch...' and 'update...'
+         * elements.
+         *
+         * The 'targetElem' will be update with any text content received via
+         * 'inbound events'.
+         */
         const fetchDirectElem = document.getElementById('fetchDirect');
         const updateDirectElem = document.getElementById('updateDirect');
         const targetElem = document.getElementById('target');
 
         // Register listeners.
+        /**
+         * Here we register event listeners against the 'fetch...' and 'update...'
+         * elements.
+         *
+         * Click actions performed on the 'fetch...' element cause the 'fetch()'
+         * method of 'moduleA' to be explicitly invoked. The resulting data is
+         * made available to the application via the 'NAMESPACE:FETCHED' event,
+         * which is dispatched from the window.
+         */
         fetchDirectElem.addEventListener('click', () => {
           window.__CORE__.modules.moduleA.fetch()
             .then((data) => {
@@ -51,6 +94,12 @@
             });
         });
 
+        /**
+         * Click actions performed on the 'update...' element cause the 'update()'
+         * method of 'moduleA' to be explicitly invoked. The resulting data is
+         * made available to the application via the 'NAMESPACE:UPDATED' event,
+         * which is dispatched from the window.
+         */
         updateDirectElem.addEventListener('click', () => {
           window.__CORE__.modules.moduleB.update()
             .then((data) => {
@@ -61,6 +110,12 @@
             });
         });
 
+        /**
+         * Here we register the listeners for the 'inbound events' (ie. those
+         * that return following the emission of an 'outbound event'). When an
+         * 'inbound event' is received, the 'target...' element is updated to
+         * display the event payload.
+         */
         window.addEventListener('NAMESPACE:FETCHED', ({ detail: data }) => {
           targetElem.innerHTML = '';
           targetElem.innerHTML = JSON.stringify(data, null, 2);
