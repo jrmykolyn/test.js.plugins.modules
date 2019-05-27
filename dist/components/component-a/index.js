@@ -9,6 +9,9 @@
   `;
     // Define component class.
     COMPONENTS.ComponentA = class ComponentA extends HTMLElement {
+        static get observedAttributes() {
+            return ['outbound-event'];
+        }
         constructor() {
             super();
             this.root = this.attachShadow({ mode: 'open' });
@@ -17,12 +20,14 @@
             // Bind.
             this.fetch = this.fetch.bind(this);
         }
+        // Lifecycle.
         connectedCallback() {
             this.refs.btn.addEventListener('click', this.fetch);
         }
         disconnectedCallback() {
             this.refs.btn.removeEventListener('click', this.fetch);
         }
+        // API.
         getRefs() {
             return [...this.root.querySelectorAll('[ref]') || []]
                 .reduce((acc, node) => {
@@ -30,7 +35,7 @@
             }, {});
         }
         fetch() {
-            const e = new Event('NAMESPACE:FETCH', {
+            const e = new Event(this.getAttribute('outbound-event') || 'NAMESPACE:DEFAULT', {
                 "bubbles": true,
                 "composed": true,
             });
