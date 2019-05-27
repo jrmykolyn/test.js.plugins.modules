@@ -6,11 +6,12 @@
   </head>
   <body>
     <div>
-      <button id="fetch">Fetch Data</button>
+      <component-a>
+        <span slot="content">Fetch Data</span>
+      </component-a>
       <button id="fetchDirect">Invoke Data Fetching Method</button>
       <button id="update">Update Data</button>
       <button id="updateDirect">Invoke Data Updating Method</button>
-      <component-a></component-a>
     </div>
     <div>
       <pre id="target"></pre>
@@ -27,17 +28,12 @@
     <script src="../dist/core/index.js"></script>
     <script charset="utf-8">
       window.addEventListener('DOMContentLoaded', () => {
-        const fetchElem = document.getElementById('fetch');
         const fetchDirectElem = document.getElementById('fetchDirect');
         const updateElem = document.getElementById('update');
         const updateDirectElem = document.getElementById('updateDirect');
         const targetElem = document.getElementById('target');
 
         // Register listeners.
-        fetchElem.addEventListener('click', () => {
-          window.dispatchEvent(new Event('NAMESPACE:FETCH'));
-        });
-
         fetchDirectElem.addEventListener('click', () => {
           window.__CORE__.modules.moduleA.fetch()
             .then((data) => {
