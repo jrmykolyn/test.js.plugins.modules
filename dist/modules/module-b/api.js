@@ -1,22 +1,17 @@
 "use strict";
-(function (window, APIS) {
-    var ApiB = /** @class */ (function () {
-        function ApiB() {
+((window, APIS) => {
+    class ApiB {
+        static get API_URL() {
+            return 'https://api.exchangeratesapi.io/latest';
+        }
+        constructor() {
             console.log('__ INSIDE `ApiB#constructor()`');
         }
-        Object.defineProperty(ApiB, "API_URL", {
-            get: function () {
-                return 'https://api.exchangeratesapi.io/latest';
-            },
-            enumerable: true,
-            configurable: true
-        });
-        ApiB.prototype.updateData = function () {
+        updateData() {
             console.log('__ INSIDE `ApiB#updateData()`');
             return window.fetch(ApiB.API_URL)
-                .then(function (data) { return data.json(); });
-        };
-        return ApiB;
-    }());
+                .then((data) => data.json());
+        }
+    }
     APIS.ApiB = ApiB;
 })(window, (window.__APIS__ = window.__APIS__ || {}));
