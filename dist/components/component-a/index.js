@@ -3,7 +3,7 @@
     // Define template.
     const template = document.createElement('template');
     template.innerHTML = `
-    <button>
+    <button ref="btn">
       <slot name="content">Component A</slot>
     </button>
   `;
@@ -13,6 +13,28 @@
             super();
             this.root = this.attachShadow({ mode: 'open' });
             this.root.appendChild(template.content.cloneNode(true));
+            this.refs = this.getRefs();
+            // Bind.
+            this.fetch = this.fetch.bind(this);
+        }
+        connectedCallback() {
+            this.refs.btn.addEventListener('click', this.fetch);
+        }
+        disconnectedCallback() {
+            this.refs.btn.removeEventListener('click', this.fetch);
+        }
+        getRefs() {
+            return [...this.root.querySelectorAll('[ref]') || []]
+                .reduce((acc, node) => {
+                return Object.assign({}, acc, { [node.getAttribute('ref')]: node });
+            }, {});
+        }
+        fetch() {
+            const e = new Event('NAMESPACE:FETCH', {
+                "bubbles": true,
+                "composed": true,
+            });
+            this.refs.btn.dispatchEvent(e);
         }
     };
     // Register component.
