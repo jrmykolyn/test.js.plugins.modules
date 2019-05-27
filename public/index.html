@@ -6,15 +6,20 @@
   </head>
   <body>
     <div>
-      <component-a outbound-event="NAMESPACE:FETCH">
-        <span slot="content">Fetch Data</span>
-      </component-a>
-      <component-a outbound-event="NAMESPACE:UPDATE">
-        <span slot="content">Update Data</span>
-      </component-a>
-
-      <button id="fetchDirect">Invoke Data Fetching Method</button>
-      <button id="updateDirect">Invoke Data Updating Method</button>
+      <!-- Web Component controls. -->
+      <div>
+        <component-a outbound-event="NAMESPACE:FETCH">
+          <span slot="content">Fetch Data</span>
+        </component-a>
+        <component-a outbound-event="NAMESPACE:UPDATE">
+          <span slot="content">Update Data</span>
+        </component-a>
+      </div>
+      <!-- 'Vanilla' HTML controls. -->
+      <div>
+        <button id="fetchDirect">Invoke Data Fetching Method</button>
+        <button id="updateDirect">Invoke Data Updating Method</button>
+      </div>
     </div>
     <div>
       <pre id="target"></pre>
