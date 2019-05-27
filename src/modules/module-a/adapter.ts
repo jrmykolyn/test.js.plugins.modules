@@ -1,7 +1,5 @@
 declare var window: Window;
 
-import { RegistrationObject } from '../';
-
 ((window: any, ADAPTERS) => {
   class AdapterA {
     api: any;
@@ -26,7 +24,7 @@ import { RegistrationObject } from '../';
       });
     }
 
-    register(): RegistrationObject[] {
+    register() {
       return [
         { listenOn: 'NAMESPACE:FETCH', emitOn: ['NAMESPACE:FETCHED'], callbacks: [this.fetch] },
       ];
