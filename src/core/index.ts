@@ -8,15 +8,23 @@ interface CoreOpts {
   modules?: any;
 }
 
+// The Core module is defined within an immediately invoked
+// function expression. The wrapping function accepts two parameters:
+// - `window`:    A reference to the global browser context.
 ((window: any) => {
   class Core {
     modules: any;
 
+    // The constructor function receives an object of options data,
+    // which includes an object of module classes.
     constructor(opts: CoreOpts = {}) {
+      // Here we capture a reference to the object of modules data
+      // for later use.
       this.modules = opts.modules || {};
 
-      // For each module provided via `opts`:
-      // - Extract the module-specific event and callback data.
+      // Then we iterate through the modules and execute the following
+      // for each:
+      // - Extract the event and callback data using the module's `register()` method.
       // - Register 1x listener for each 'inbound' event.
       // - Invoke the corresponding callbacks when an 'inbound' event is emitted.
       // - Dispatch all 'outbound' events using the data return by each callback.
@@ -42,6 +50,11 @@ interface CoreOpts {
     }
   }
 
-  const modules = window.__MODULES__;
-  const core = window.__CORE__ = new Core({ modules })
+  // Finally, we instantiate an instance of the Core class, passing in an
+  // options object that itself contains an object of modules data.
+  //
+  // Additionally, we expose the Core instance as the `__CORE__` property of
+  // the window object, which we received as a paramter of the immediately
+  // invoked function expression.
+  const core = window.__CORE__ = new Core({ modules: window.__MODULES__ || {} })
 })(window);
